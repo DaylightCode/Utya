@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+@font-face {
+  font-family: 'Uniform Rounded';
+  src: url('/uniform-rounded-ultra.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: 'Poppins', sans-serif;
+  --font-uniform: 'Uniform Rounded', sans-serif;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+:root {
+  --color-cream: #F9F5E9;
+  --light-blue: #36ADF5;
+}
