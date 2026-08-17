@@ -1,5 +1,7 @@
 # $UTYA
 
+<img width="1200" height="798" alt="image" src="https://github.com/user-attachments/assets/8670bb93-8454-45e1-84c0-950c68dc17b8" />
+
 Landing page for $UTYA - a community-driven memecoin on the TON Blockchain, featuring the beloved Telegram duck mascot.
 
 ⚙️ Stack:
