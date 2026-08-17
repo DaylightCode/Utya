@@ -1,5 +1,25 @@
-<<<<<<< HEAD
-# Utya
-=======
-# utya
->>>>>>> 69466a7783f329b8e80a791dd6ae94d9f88bf450
+# $UTYA
+
+Landing page for $UTYA - a community-driven memecoin on the TON Blockchain, featuring the beloved Telegram duck mascot.
+
+⚙️ Stack:
+* Vite
+* React v19
+* TypeScript
+* Tailwind CSS
+* GSAP (ScrollTrigger animations)
+
+✨ Key Features
+* Animated Hero Section - scroll-triggered reveal animations via GSAP
+* Copy-to-Clipboard - one-click contract address copying
+* Responsive Design - fully adaptive layout for mobile, tablet, and desktop
+* Custom SVG Illustrations - hand-crafted cloud borders and decorative elements
+* Social & Community Links - Telegram, Twitter, GeckoTerminal, CoinGecko, CoinMarketCap
+
+📌 How to run locally?
+
+1. `git clone https://github.com/DaylightCode/Utya.git` `cd Utya`
+2. `npm install`
+3. `npm run dev`
+
+🚀 Live: https://utya-ton.vercel.app/
