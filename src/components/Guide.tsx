@@ -1,5 +1,5 @@
 "use client"
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
@@ -34,7 +34,7 @@ function Guide() {
   const containerRef = useRef(null)
 
   useGSAP(() => {
-    const textLines = gsap.utils.toArray('.reveal-line');
+    const textLines = gsap.utils.toArray<HTMLElement>('.reveal-line');
     textLines.forEach((line) => {
       gsap.fromTo(line, 
         { 

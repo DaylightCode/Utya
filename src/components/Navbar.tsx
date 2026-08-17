@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef } from "react"
+import React, { useState, useRef } from "react"
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import { ScrollToPlugin } from "gsap/ScrollToPlugin"
@@ -10,7 +10,7 @@ gsap.registerPlugin(ScrollToPlugin)
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const menuRef = useRef(null)
-  const tl = useRef(null)
+  const tl = useRef<gsap.core.Timeline | null>(null);
 
   useGSAP(() => {
     tl.current = gsap.timeline({ paused: true })
@@ -21,18 +21,18 @@ function Navbar() {
   })
 
   const closeMenu = () => {
-    if(isOpen) {
+    if(isOpen && tl.current) {
       tl.current.reverse()
       setIsOpen(false)
     }
   }
 
-  const handleLinkClick = (e, id) => {
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     handleScroll(e,id)
     closeMenu()
   }
 
-  const handleScroll = (e, id) => {
+  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault()
     gsap.to(window, { 
       duration: 1,
@@ -66,6 +66,7 @@ function Navbar() {
           </a>
           <button 
             onClick={() => {
+              if (!tl.current) return
               if(isOpen) {
                 tl.current.reverse()
                 setIsOpen(false)

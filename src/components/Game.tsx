@@ -36,9 +36,7 @@ function ResponsiveCamera() {
     const widthZoom = size.width / GAME_WIDTH
     const heightZoom = size.height / GAME_HEIGHT
     const zoom = Math.min(widthZoom, heightZoom)
-    // @ts-ignore
     camera.zoom = zoom
-    // @ts-ignore
     camera.updateProjectionMatrix()
   }, [size, camera])
 
@@ -46,7 +44,7 @@ function ResponsiveCamera() {
 }
 
 function Bird({ meshRef, gameState, onGameOver, jumpRef }: {
-  meshRef: React.RefObject<THREE.Mesh>
+  meshRef: React.RefObject<THREE.Mesh | null>
   gameState: GameState
   onGameOver: () => void
   jumpRef: React.MutableRefObject<() => void>
@@ -110,7 +108,7 @@ function PipePair({ x, gapOffset, gameState, despawnX, onRefsReady, onOffscreen 
   gapOffset: number
   gameState: GameState
   despawnX: number
-  onRefsReady: (bottomRef: React.RefObject<THREE.Group>, topRef: React.RefObject<THREE.Group>) => void
+  onRefsReady: (bottomRef: React.RefObject<THREE.Group | null>, topRef: React.RefObject<THREE.Group | null>) => void
   onOffscreen: () => void
 }) {
   const groupRef = useRef<THREE.Group>(null)
@@ -131,7 +129,7 @@ function PipePair({ x, gapOffset, gameState, despawnX, onRefsReady, onOffscreen 
     onRefsReady(bottomGroupRef, topGroupRef)
   }, [])
 
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     if (!groupRef.current) return
     if (gameState !== "playing") return
 
@@ -172,7 +170,7 @@ type PipeData = { id: number; x: number; scoreAt: number; gapOffset: number }
 function PipeManager({ gameState, birdX, onRefsChange, onScore }: {
   gameState: GameState
   birdX: number
-  onRefsChange: (refs: React.RefObject<THREE.Group>[]) => void
+  onRefsChange: (refs: React.RefObject<THREE.Group | null>[]) => void
   onScore: () => void
 }) {
   const viewport = useThree((state) => state.viewport)
@@ -180,7 +178,7 @@ function PipeManager({ gameState, birdX, onRefsChange, onScore }: {
   const despawnX = -viewport.width / 2 - 0.5
 
   const [pipes, setPipes] = useState<PipeData[]>([])
-  const allRefs = useRef<Map<number, React.RefObject<THREE.Group>[]>>(new Map())
+  const allRefs = useRef<Map<number, React.RefObject<THREE.Group | null>[]>>(new Map())
   const nextId = useRef(0)
   const spawnTimer = useRef(0)
   const gameTime = useRef(0)
@@ -221,7 +219,7 @@ function PipeManager({ gameState, birdX, onRefsChange, onScore }: {
     })))
   }
 
-  function handleRefsReady(id: number, bottomRef: React.RefObject<THREE.Group>, topRef: React.RefObject<THREE.Group>) {
+  function handleRefsReady(id: number, bottomRef: React.RefObject<THREE.Group | null>, topRef: React.RefObject<THREE.Group | null>) {
     allRefs.current.set(id, [bottomRef, topRef])
     onRefsChange(Array.from(allRefs.current.values()).flat())
   }
@@ -244,7 +242,7 @@ function PipeManager({ gameState, birdX, onRefsChange, onScore }: {
     prevGameState.current = gameState
   }, [gameState])
 
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     if (gameState !== "playing") return
 
     gameTime.current += delta
@@ -281,8 +279,8 @@ function PipeManager({ gameState, birdX, onRefsChange, onScore }: {
 }
 
 function CollisionChecker({ meshRef, obstacleRefs, gameState, onCollision }: {
-  meshRef: React.RefObject<THREE.Mesh>
-  obstacleRefs: React.RefObject<THREE.Group>[]
+  meshRef: React.RefObject<THREE.Mesh | null>
+  obstacleRefs: React.RefObject<THREE.Group | null>[]
   gameState: GameState
   onCollision: () => void
 }) {
@@ -341,7 +339,7 @@ function PlayButton({ label, onClick }: { label: string; onClick: (e: React.Poin
 function Game() {
   const birdRef = useRef<THREE.Mesh>(null)
   const jumpRef = useRef<() => void>(() => {})
-  const [obstacleRefs, setObstacleRefs] = useState<React.RefObject<THREE.Group>[]>([])
+  const [obstacleRefs, setObstacleRefs] = useState<React.RefObject<THREE.Group | null>[]>([])
   const [gameState, setGameState] = useState<GameState>("menu")
   const [score, setScore] = useState(0)
 
